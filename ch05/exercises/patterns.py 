@@ -1,0 +1,13 @@
+def star_pyramid(x):
+    #if x == 1:
+        #print(y)
+    #else: 
+    for _ in range(x):
+        if x != 1:
+            print("*" * x)
+            
+
+x = input("number of rows: ")
+y = "*"
+
+

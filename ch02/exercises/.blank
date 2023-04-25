@@ -1,0 +1,8 @@
+import pygame 
+pygame.init()
+screen = pygame.display.set_mode() #() makes it full screen 
+screen.fill ("red")
+pygame.display.flip() #pygame keeps track of display image and next image 
+input (Enter)
+screen.fill ("blue")
+pygame.display.flip()

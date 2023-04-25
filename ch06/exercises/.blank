@@ -1,0 +1,15 @@
+import json 
+def main(): 
+    file_contents = open("ch05/sus.txt", "r").read()
+    print(file_contents, type(file_contents)) 
+    data = json.loads(file_contents) 
+    print(data, type(data))
+
+main()
+
+#json
+[
+    1,
+    "hello", 
+    ["1","2","3"]
+]

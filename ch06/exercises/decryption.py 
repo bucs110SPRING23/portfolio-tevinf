@@ -1,0 +1,32 @@
+
+#text = open('encripted.txt', 'r')
+text = "lzwimauctjgofxgpbmehwvgnwjlzwdsrqvgy"
+
+def decrypt(text):
+
+    alphabet="abcdefghijklmnopqrstuvwxyz"
+    
+    encryptionkey= int(len(alphabet))
+    result = ""
+
+    for char in text:
+        if char in alphabet:
+            position = alphabet.find(char)
+            new_pos = (position - encryptionkey) % 26
+            new_char = text[new_pos]
+            result += new_char
+        else:
+            result += char
+    print("Decrypted message: ", result)
+
+def main(): 
+    result = decrypt(text)
+    while True: 
+        for _ in range(26): 
+            if result ==  "the quick brown fox jumped over the lazy dog": 
+                print("done")
+            else: 
+                pass
+        
+
+main()

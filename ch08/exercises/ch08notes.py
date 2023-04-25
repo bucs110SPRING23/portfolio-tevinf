@@ -19,13 +19,13 @@ class Num:
 #class Foo: 
     #def __init__(self, **kwargs): #**kwargs is using a list as a parameter 
         #self.__dict__ = kwargs 
-        #print(kwargs)
+        #print(kwargs) try 
     
 
 
 def main(): 
 
-    mynum = Num(7) 
+    mynum = Num(8) 
     #mynum2 = Num(9) 
     #mynum3 = {'data':7, "x" : "string"}
 

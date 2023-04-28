@@ -1,41 +1,84 @@
-import pygame
-import random
+from stringutility import StringUtility
 
-pygame.init()
+def main():
 
-## SCREEN DIMENSIONS ##
+    # create a list of StringUtility objects to use for testing
+    test_strings = ["interesting", "aardvark", "aaa", "aeiouAEIOU", "a b c d e f g h i j k l m n o p q r s t u v w x y z", '']
+    su = []
+    for i in test_strings:
+        su.append(StringUtility(i))
 
-screen_width = 400
-screen_height = 400
-screen = pygame.display.set_mode((screen_width,screen_height))
 
-## DARTBOARD SETUP ##
+    print("=========== Testing __str__ method... ===========")
+    expected_results = ["interesting", "aardvark", "aaa", "aeiouAEIOU", "a b c d e f g h i j k l m n o p q r s t u v w x y z", '']
+    i = 0
+    for s in su:
+        result = str(s)
+        print(f"{s}, got: {result}, expected: {expected_results[i]}")
+        assert(result == expected_results[i])
+        i += 1
+    print("=========== ...__str__ method passed ===========")
 
-center = (screen_width // 2, screen_height // 2)
-radius = 200
-screen.fill("blue")
-pygame.draw.circle(screen, "orange", center, radius)
+    print("=========== Testing vowels method... ===========")
+    expected_results = ["4", "3", "3", "many", "many", "0"]
+    i = 0
+    for s in su:
+        result = s.vowels()
+        print(f"{s}, got: {result}, expected: {expected_results[i]}")
+        assert(result == expected_results[i])
+        i += 1
+        print("=========== ...vowels method passed ===========")
 
-## DART ACTIONS ##
+    print("=========== Testing bothEnds method... ===========")
+    expected_results = ["inng", "aark", "aaaa", "aeOU", "a  z", '']
+    i = 0
+    for s in su:
+        result = s.bothEnds()
+        print(f"{s}, got: {result}, expected: {expected_results[i]}")
+        assert(result == expected_results[i])
+        i += 1
+        print("=========== ...bothEnds method passed ===========")
 
-dart_x = (random.randint(0, 400))
-dart_y = (random.randint(0, 400))
-dart_pos = (dart_x, dart_y)
-is_inside_circle = (dart_pos[0] - center[0]) ** 2 + (dart_pos[0] - center[1]) ** 2 <= radius ** 2
-# this applies the distance formula between the x and y coordinates of the dartboard and the dart
-# if the distance <= the radius ^ 2, then the dart point is inside the circle by the distance formula 
+    print("=========== Testing fixStart method... ===========")
+    expected_results = ["interest*ng", "a*rdv*rk", "a**", "aeiouAEIOU", "a b c d e f g h i j k l m n o p q r s t u v w x y z", '']
+    i = 0
+    for s in su:
+        result = s.fixStart()
+        print(f"{s}, got: {result}, expected: {expected_results[i]}")
+        assert(result == expected_results[i])
+        i += 1
+    print("=========== ...fixStart method passed ===========")
 
-## DART THROWING LOOP ##
+    print("=========== Testing asciiSum method... ===========")
+    expected_results = [1196,844,291,902,3647,0]
+    i = 0
+    for s in su:
+        result = s.asciiSum()
+        print(f"{s}, got: {result}, expected: {expected_results[i]}")
+        assert(result == expected_results[i])
+        i += 1
+    print("=========== ...asciiSum method passed ===========")
 
-def dartthrow(): 
+    print("=========== Testing cipher method... ===========")
+    expected_results = ["tyepcpdetyr", "iizldizs", "ddd", "kosyeKOSYE", "z a b c d e f g h i j k l m n o p q r s t u v w x y", ""]
+    i = 0
+    for s in su:
+        result = s.cipher()
+        print(f"{s}, got: {result}, expected: {expected_results[i]}")
+        assert(result == expected_results[i])
+        i += 1
+    print("=========== ...cipher method passed ===========")
 
-    for i in range(10):
-        if is_inside_circle == True:
-            pygame.draw.circle(screen,"green", dart_pos, 10)
-        else:
-            pygame.draw.circle(screen,"red", dart_pos, 10)
-        pygame.time.wait(2000)
-        pygame.display.flip()
-    
-dartthrow()
+    print("=========== Testing __str__ method (again)... ===========")
+    expected_results = ["interesting", "aardvark", "aaa", "aeiouAEIOU", "a b c d e f g h i j k l m n o p q r s t u v w x y z", '']
+    i = 0
+    for s in su:
+        result = str(s)
+        print(f"{s}, got: {result}, expected: {expected_results[i]}")
+        assert(result == expected_results[i])
+        i += 1
+    print("=========== ...__str__ method passed (again) ===========")
 
+    print("=========== Tests Complete! ===========")
+
+main()

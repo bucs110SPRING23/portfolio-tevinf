@@ -1,33 +1,32 @@
-import random 
-import math 
 import pygame
+import random
+
 pygame.init()
 
-print("Green Dot Means Hit, Red Dot Means Miss")
-screen = pygame.display.set_mode()
+screen = pygame.display.set_mode((400, 400))
 
-dimensions = screen.get_size()
-#print(dim)
 
-starting_point = [dimensions[0] // 2, dimensions[1] // 2] 
-pygame.draw.circle(screen, "blue", starting_point, 250)
-pygame.draw.circle(screen,"purple", starting_point, 230)
+circle_center = (200,200)
+circle_radius = 200
+
+screen.fill("orange")
+
+circle = pygame.draw.circle(screen, "blue", circle_center, circle_radius, 0)
+border = pygame.draw.circle(screen, "black", circle_center, circle_radius, 5)
 pygame.display.flip()
-pygame.time.wait(30000)
-#pygame.display.get_init()
 
-color = ["green", "red"]
-#hitspot = [randrange(0, dimensions[0]//2), randrange(0,dimensions[1]//2)]
-distance_from_center = math.hypot(x1-x2, y2-y1) 
-is_in_circle = distance_from_center <= dimensions[0] // 2
-
-for _ in range(10):
-    hitspot = [random.randrange(0, dimensions[0]//2), random.randrange(0,dimensions[1]//2)]
-    dart = pygame.draw.circle(screen, color, hitspot, 50)
-    pygame.display.flip()
-    pygame.time.wait(3000)
-    if dart == hitspot:
-        color = "green"
+for i in range(10):
+    dart_pos = (random.randint(0, 400), random.randint(0, 400))
+    # distance formula to determine if the dart landed in the circle
+    if (dart_pos[0] - circle_center[0]) ** 2 + (dart_pos[1] - circle_center[1]) ** 2 <= circle_radius ** 2:
+        pygame.draw.circle(screen, "green", dart_pos, 10)
+        pygame.time.wait(2000)
+        pygame.display.update()
     else:
-        color = "red" 
+        pygame.draw.circle(screen, "red", dart_pos, 10)
+        pygame.time.wait(2000)
+        pygame.display.update()
+    
+
+
 

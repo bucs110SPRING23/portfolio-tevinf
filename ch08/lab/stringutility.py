@@ -1,4 +1,5 @@
 class StringUtility: 
+    
     def __init__(self, string):
         #instance variable
         self.string = string 
@@ -9,8 +10,8 @@ class StringUtility:
     
     def vowels(self):
         count = 0 
-        for char in self.string: 
-            if char in 'aeiou':
+        for letter in self.string: 
+            if letter in 'aeiou':
                 count += 1
             else: 
                 pass

@@ -1,69 +1,106 @@
 import pygame
-import random 
-import math 
+import random
 
 pygame.init()
 
-# Dart Board
-screen = pygame.display.set_mode()
-dimensions = screen.get_size() 
-center = (dimensions [0] // 2, dimensions [1] // 2)
+screen = pygame.display.set_mode((400, 400))
 
-pygame.draw.circle(screen, "pink", center, 300)
-pygame.display.flip()
+def guess():
+    screen.fill("orange")
+    player1button = pygame.draw.rect(screen, "green", [100, 200, 80, 80])
+    player2button = pygame.draw.rect(screen, "black", [100, 290, 80, 80])
+    pygame.display.update()
+    pygame.time.wait(5000)
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+    mouse_rect = pygame.draw.rect(screen, (0,0,0), [10, 10, mouse_x, mouse_y])
 
+    for event in pygame.event.get(): 
+        if event.type == pygame.MOUSEBUTTONDOWN: 
+            if player1button.colliderect(mouse_rect) == True: 
+                guess = "Player_1"
+            elif player2button.colliderect(mouse_rect) == True: 
+                guess = "Player_2"
 
-for i in range(10):
+def main():
+    guess()
 
-    xcor1 = random.randrange(dimensions[0]//2 - 300, dimensions[0]//2 + 300)
-    ycor1 = random.randrange(dimensions [1]//2 - 300, dimensions [1]//2 + 300)
-    xcor2 = random.randrange(dimensions[0]//2 - 300, dimensions[0]//2 + 300)
-    ycor2 = random.randrange(dimensions [1]//2 - 300, dimensions [1]//2 + 300)
-    player1 = pygame.draw.circle(screen, "red", (xcor1, ycor1), 10)
-    player2 = pygame.draw.circle(screen, "blue", (xcor2, ycor2), 10)
-    darts = (player1, player2)
-    p1points = [0]
-    p2points = [0]
-    for player1 in darts:
-        pygame.draw.circle(screen, "red", (xcor1, ycor1), 10)
-        pygame.display.flip()
-        pygame.time.wait(500)
-        if 496 < xcor1 < 996 and 200 < ycor1 < 780: #from screen size
-            p1points.append(1)
-            print("player 1 good shot")
+    circle_center = (200,200)
+    circle_radius = 200
+
+    screen.fill("orange")
+
+    circle = pygame.draw.circle(screen, "blue", circle_center, circle_radius, 0)
+    border = pygame.draw.circle(screen, "black", circle_center, circle_radius, 5)
+    pygame.display.flip()
+
+    player1points = []
+    player2points = []
+
+    for i in range(10):
+
+        ## PLAYER 1 DART ##
+
+        dart_pos1 = (random.randint(0, 400), random.randint(0, 400))
+        # distance formula to determine if the dart landed in the circle
+        if (dart_pos1[0] - circle_center[0]) ** 2 + (dart_pos1[1] - circle_center[1]) ** 2 <= circle_radius ** 2:
+            player1points.append(1)
+            pygame.draw.circle(screen, "green", dart_pos1, 10)
+            pygame.time.wait(2000)
+            pygame.display.update()
+
         else:
-            print("player 1 missed")
-    for player2 in darts: 
-        pygame.draw.circle(screen, "blue", (xcor2, ycor2), 10)
-        pygame.display.flip()
-        pygame.time.wait(500)
-        if 496 < xcor2 < 996 and 200 < ycor2 < 780:
-            p2points.append(1)
-            print("player 2 good shot")
-        else: 
-            print("player 2 missed")
-if len(p1points) > len(p2points):
-    message = "Red Player 1 Wins!"
-elif len(p1points) == len(p2points):
-    message = "TIE!" 
-else:
-    message = "Blue Player 2 Wins!"
+            pygame.draw.circle(screen, "red", dart_pos1, 10)
+            pygame.time.wait(2000)
+            pygame.display.update()
+        
+        ## PLAYER 2 DART ##
+        dart_pos2 = (random.randint(0, 400), random.randint(0, 400))
+        if (dart_pos2[0] - circle_center[0]) ** 2 + (dart_pos2[1] - circle_center[1]) ** 2 <= circle_radius ** 2:
+            player2points.append(1)
+            pygame.draw.circle(screen, "white", dart_pos2, 10)
+            pygame.time.wait(2000)
+            pygame.display.update()
 
-import pygame
-pygame.init()
-font = pygame.font.Font(None, 48) 
-text = font.render(message, True, "white") 
-screen.blit(text, (300,300))
-pygame.display.flip()
-pygame.time.wait (5000)
+        else:
+            pygame.draw.circle(screen, "black", dart_pos2, 10)
+            pygame.time.wait(2000)
+            pygame.display.update()
+
+    players = ("PLAYER 1", "PLAYER_2") 
+    for player in players:
+        if len(player1points) > len(player2points):
+            screen.fill("green")
+            pygame.display.update()
+            winner = "PLAYER 1"
+            message = "RED/GREEN Player 1 Wins!"
+        elif len(player1points) == len(player2points):
+            screen.fill("orange")
+            pygame.display.update()
+            message = "TIE!" 
+        else:
+            screen.fill("black")
+            pygame.display.update()
+            winner = "PLAYER_2"
+            message = "BLACK/WHITE Blue Player 2 Wins!" 
+        if guess == winner: 
+            font = pygame.font.Font(None, 24) 
+            guess_txt = font.render("YOU GUESSED CORRECTLY", True, "purple") 
+            screen.blit(guess_txt, (100,270))
+            pygame.display.flip()
+            pygame.time.wait (5000)
+        elif guess != winner:
+            font = pygame.font.Font(None, 24) 
+            guess_txt = font.render("YOU GUESSED WRONG", True, "purple") 
+            screen.blit(guess_txt, (100,270))
+            pygame.display.flip()
+            pygame.time.wait (5000)
 
 
-while True:
-    pygame.draw.rect(screen,"red",[100,200,100,200])
-    pygame.draw.rect(screen, "blue", [200, 300, 100, 200])
-    redbutton = pygame.draw.rect(screen,"red",[100,200,100,200])
-    bluebutton = pygame.draw.rect(screen, "blue", [200, 300, 100, 200])
-    if pygame.MOUSEBUTTONDOWN(redbutton) and len(p1points) > len(p2points):
-        print("you won the bet")
-    else:
-        print("you lost") 
+
+    font = pygame.font.Font(None, 24) 
+    text = font.render(message, True, "white") 
+    screen.blit(text, (100, 200))
+    pygame.display.flip()
+    pygame.time.wait (5000)
+
+main()
